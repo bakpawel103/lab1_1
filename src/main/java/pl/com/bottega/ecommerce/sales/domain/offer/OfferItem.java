@@ -41,11 +41,11 @@ public class OfferItem {
             discountValue = discountValue.add(discount);
         }
 
-        totalCost = new Money(productPrice.multiply(new BigDecimal(quantity)).subtract(discountValue), currency);
+        this.discount = new Discount(new Money(discountValue, currency), discountCause);
 
-        product = new Product(productId, productName, productSnapshotDate, productType, totalCost.getValue(), currency);
+        product = new Product(productId, productName, productSnapshotDate, productType, productPrice, currency);
 
-        this.discount = new Discount(new Money(discount, currency), discountCause);
+        totalCost = new Money(product.getPrice().getValue().multiply(new BigDecimal(quantity)).subtract(this.discount.getDiscount().getValue()), currency);
     }
 
     public Discount getDiscount() { return discount; }
