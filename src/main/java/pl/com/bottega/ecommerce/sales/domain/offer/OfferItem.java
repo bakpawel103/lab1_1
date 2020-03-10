@@ -33,19 +33,18 @@ public class OfferItem {
 
     private BigDecimal totalCost;
 
+    // money
     private Money money;
 
     // discount
-    private String discountCause;
+    private Discount discount;
 
-    private BigDecimal discount;
-
-    public OfferItem(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
+    public OfferItem(String currency, String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
             int quantity) {
-        this(productId, productPrice, productName, productSnapshotDate, productType, quantity, null, null);
+        this(currency, productId, productPrice, productName, productSnapshotDate, productType, quantity, null, null);
     }
 
-    public OfferItem(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
+    public OfferItem(String currency, String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
             int quantity, BigDecimal discount, String discountCause) {
         this.productId = productId;
         this.productPrice = productPrice;
@@ -54,8 +53,8 @@ public class OfferItem {
         this.productType = productType;
 
         this.quantity = quantity;
-        this.discount = discount;
-        this.discountCause = discountCause;
+
+        this.discount = new Discount(new Money(discount, currency), discountCause);
 
         BigDecimal discountValue = new BigDecimal(0);
         if (discount != null) {
@@ -90,13 +89,8 @@ public class OfferItem {
         return totalCost;
     }
 
-    public BigDecimal getDiscount() {
-        return discount;
-    }
+    public Discount getDiscount() { return discount; }
 
-    public String getDiscountCause() {
-        return discountCause;
-    }
 
     public int getQuantity() {
         return quantity;
@@ -104,7 +98,7 @@ public class OfferItem {
 
     @Override
     public int hashCode() {
-        return Objects.hash(money.getCurrency(), discount, discountCause, productId, productName, productPrice, productSnapshotDate, productType,
+        return Objects.hash(money.getCurrency(), discount, discount.getCause(), productId, productName, productPrice, productSnapshotDate, productType,
                 quantity, totalCost);
     }
 
@@ -122,7 +116,7 @@ public class OfferItem {
         OfferItem other = (OfferItem) obj;
         return Objects.equals(money.getCurrency(), other.money.getCurrency())
                && Objects.equals(discount, other.discount)
-               && Objects.equals(discountCause, other.discountCause)
+               && Objects.equals(discount.getCause(), other.discount.getCause())
                && Objects.equals(productId, other.productId)
                && Objects.equals(productName, other.productName)
                && Objects.equals(productPrice, other.productPrice)
