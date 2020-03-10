@@ -45,7 +45,7 @@ public class OfferItem {
 
         product = new Product(productId, productName, productSnapshotDate, productType, productPrice, currency);
 
-        totalCost = new Money(product.getPrice().getValue().multiply(new BigDecimal(quantity)).subtract(this.discount.getDiscount().getValue()), currency);
+        totalCost = new Money(product.getProductPrice().getValue().multiply(new BigDecimal(quantity)).subtract(this.discount.getDiscount().getValue()), currency);
     }
 
     public Discount getDiscount() { return discount; }
@@ -58,7 +58,7 @@ public class OfferItem {
 
     @Override
     public int hashCode() {
-        return Objects.hash(totalCost.getCurrency(), discount, discount.getCause(), product.getProductId(), product.getProductName(), product.getPrice().getValue(), product.getProductSnapshotDate(), product.getProductType(),
+        return Objects.hash(totalCost.getCurrency(), discount, discount.getCause(), product.getProductId(), product.getProductName(), product.getProductPrice().getValue(), product.getProductSnapshotDate(), product.getProductType(),
                 quantity, totalCost.getValue());
     }
 
@@ -79,7 +79,7 @@ public class OfferItem {
                && Objects.equals(discount.getCause(), other.discount.getCause())
                && Objects.equals(product.getProductId(), other.product.getProductId())
                && Objects.equals(product.getProductName(), other.product.getProductName())
-               && Objects.equals(product.getPrice(), other.product.getPrice())
+               && Objects.equals(product.getProductPrice(), other.product.getProductPrice())
                && Objects.equals(product.getProductSnapshotDate(), other.product.getProductSnapshotDate())
                && Objects.equals(product.getProductType(), other.product.getProductType())
                && quantity == other.quantity
@@ -94,11 +94,11 @@ public class OfferItem {
      * @return
      */
     public boolean sameAs(OfferItem other, double delta) {
-        if (product.getPrice() == null) {
-            if (other.product.getPrice() != null) {
+        if (product.getProductPrice() == null) {
+            if (other.product.getProductPrice() != null) {
                 return false;
             }
-        } else if (!product.getPrice().equals(other.product.getPrice())) {
+        } else if (!product.getProductPrice().equals(other.product.getProductPrice())) {
             return false;
         }
         if (product.getProductName() == null) {

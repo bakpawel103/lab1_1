@@ -36,7 +36,7 @@ public class Product {
         return type;
     }
 
-    public Money getPrice() {
+    public Money getProductPrice() {
         return price;
     }
 }
