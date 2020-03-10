@@ -3,20 +3,20 @@ package pl.com.bottega.ecommerce.sales.domain.offer;
 import java.math.BigDecimal;
 
 public class Discount {
-    private Money discount;
+    private Money value;
     private String cause;
 
     public Discount(Money discount, String cause) {
-        this.discount = discount;
+        this.value = discount;
         this.cause = cause;
     }
 
     public Money getDiscount() {
-        return discount;
+        return value;
     }
 
     public void setDiscount(Money discount) {
-        this.discount = discount;
+        this.value = discount;
     }
 
     public String getCause() {
